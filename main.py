@@ -241,7 +241,7 @@ def main() -> bool:
     """
 
     program_name: str = "Converter html bookmarks to csv"
-    program_version: str = "1.0"
+    program_version: str = "v1.0.0"
     program_description: str = "Converts an HTML file containing bookmarks to a CSV file."
 
     # Create an argument parser
