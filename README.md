@@ -1,41 +1,40 @@
-# Gestionnaire de Favoris
+# Bookmarks Manager
 
-![License](https://img.shields.io/github/license/Redstoneur/Gestionaire_Favoris)
-![Top Language](https://img.shields.io/github/languages/top/Redstoneur/Gestionaire_Favoris)
-![Build Status](https://img.shields.io/github/actions/workflow/status/Redstoneur/Gestionaire_Favoris/build-and-publish.yml)
-![Latest Release](https://img.shields.io/github/v/release/Redstoneur/Gestionaire_Favoris)
-![Release Date](https://img.shields.io/github/release-date/Redstoneur/Gestionaire_Favoris)
-![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/Gestionaire_Favoris)
+![License](https://img.shields.io/github/license/Redstoneur/Bookmarks_Manager)
+![Top Language](https://img.shields.io/github/languages/top/Redstoneur/Bookmarks_Manager)
+![Build Status](https://img.shields.io/github/actions/workflow/status/Redstoneur/Bookmarks_Manager/build-and-publish.yml)
+![Latest Release](https://img.shields.io/github/v/release/Redstoneur/Bookmarks_Manager)
+![Release Date](https://img.shields.io/github/release-date/Redstoneur/Bookmarks_Manager)
+![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/Bookmarks_Manager)
 
-Gestionnaire de Favoris est un programme Python qui convertit un fichier HTML contenant des favoris en un fichier CSV. Il a été conçu pour faciliter la gestion et l'organisation des favoris.
+Bookmarks Manager is a Python program that converts an HTML file containing bookmarks into a CSV file. It was designed to facilitate the management and organization of bookmarks.
 
-## Fonctionnement
+## Operation
+The program takes an HTML file containing bookmarks (usually exported from a web browser) as input and generates a CSV file containing these bookmarks. Each bookmark is represented by a line in the CSV file, with columns for the bookmark's title, URL, and folder.
 
-Le programme prend en entrée un fichier HTML contenant des favoris (généralement exporté depuis un navigateur web) et génère un fichier CSV contenant ces favoris. Chaque favori est représenté par une ligne dans le fichier CSV, avec des colonnes pour le titre, l'URL et le dossier du favori.
+## Usage
 
-## Utilisation
-
-Pour récupérer le programme, vous pouvez cloner ce dépôt en utilisant la commande suivante :
+To retrieve the program, you can clone this repository using the following command:
 
 ```bash
-git clone https://github.com/Redstoneur/Gestionaire_Favoris.git Gestionaire_Favoris
-cd Gestionaire_Favoris
+git clone https://github.com/Redstoneur/Bookmarks_Manager.git Bookmarks_Manager
+cd Bookmarks_Manager
 ```
 
-Pour utiliser le programme, vous devez d'abord installer les dépendances nécessaires en exécutant la commande suivante :
+To use the program, you must first install the necessary dependencies by running the following command:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Ensuite, vous pouvez exécuter le programme en utilisant la commande suivante :
+Then, you can run the program using the following command:
 
 ```bash
-python main.py <chemin_vers_le_fichier_HTML>
+python main.py <path_to_HTML_file>
 ```
 
-Remplacez `<chemin_vers_le_fichier_HTML>` par le chemin vers le fichier HTML contenant vos favoris.
+Replace `<path_to_HTML_file>` with the path to the HTML file containing your bookmarks.
 
-## Licence
+## License
 
-Ce programme est distribué sous la licence GNU General Public License v3.0. Pour plus d'informations, veuillez consulter le fichier `LICENSE` inclus avec ce programme.
+This program is distributed under the GNU General Public License v3.0. For more information, please refer to the `LICENSE` file included with this program.
