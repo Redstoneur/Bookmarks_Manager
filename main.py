@@ -1,3 +1,7 @@
+"""
+This module contains the main code of the program.
+"""
+
 ###############################################################################################
 ##### Import ##################################################################################
 ###############################################################################################
@@ -46,19 +50,48 @@ class Debug:
         """
         return f"debug({self.boolean})"
 
+    def __bool__(self) -> bool:
+        """
+        Returns the boolean value of the instance of the Debug class.
+        :return: The boolean value of the instance of the Debug class.
+        """
+        return self.boolean
 
-class Favorite_Link:
+    def change(self, boolean: bool) -> None:
+        """
+        Changes the boolean value of the instance of the Debug class.
+        :param boolean: The new boolean value.
+        :return: None
+        """
+        self.boolean = boolean
+
+    def enable(self) -> None:
+        """
+        Enables debug mode.
+        :return: None
+        """
+        self.change(True)
+
+    def disable(self) -> None:
+        """
+        Disables debug mode.
+        :return: None
+        """
+        self.change(False)
+
+
+class FavoriteLink:
     """
     Class representing a favorite (link) with a title, a URL and a folder.
 
     Attributes:
-        Title: str -> The title of the favorite.
-        URL: str -> The URL of the favorite.
-        Folder: str -> The folder of the favorite.
+        title: str -> The title of the favorite.
+        url: str -> The URL of the favorite.
+        folder: str -> The folder of the favorite.
     """
-    Title: str
-    URL: str
-    Folder: str
+    title: str
+    url: str
+    folder: str
 
     def __init__(self, title: str, url: str, folder: str = "") -> None:
         """
@@ -67,18 +100,18 @@ class Favorite_Link:
         :param url: URL of the favorite.
         :param folder: Folder of the favorite.
         """
-        self.Title = title
-        self.URL = url
-        self.Folder = folder
+        self.title = title
+        self.url = url
+        self.folder = folder
 
     def __str__(self) -> str:
         """
         Returns a string representing the instance of the Favorite_Link class.
         :return: A string representing the instance of the Favorite_Link class.
         """
-        return f"Title: {self.Title}\n" \
-               f"URL: {self.URL}\n" \
-               f"Folder: {self.Folder}"
+        return f"Title: {self.title}\n" \
+               f"URL: {self.url}\n" \
+               f"Folder: {self.folder}"
 
     def __dict__(self) -> dict:
         """
@@ -86,9 +119,9 @@ class Favorite_Link:
         :return: A dictionary representing the instance of the Favorite_Link class.
         """
         return {
-            "Title": self.Title,
-            "URL": self.URL,
-            "Folder": self.Folder
+            "Title": self.title,
+            "URL": self.url,
+            "Folder": self.folder
         }
 
     def __list__(self) -> list:
@@ -97,33 +130,32 @@ class Favorite_Link:
         :return: A list representing the instance of the Favorite_Link class.
         """
         return [
-            self.Title,
-            self.URL,
-            self.Folder
+            self.title,
+            self.url,
+            self.folder
         ]
+
 
 ###############################################################################################
 ##### Global Variables ########################################################################
 ###############################################################################################
 
 debug: Debug = Debug(False)
-program_name: str = "Converter html bookmarks to csv"
-program_version: str = "1.0"
-program_description: str = "Converts an HTML file containing bookmarks to a CSV file."
+
 
 ###############################################################################################
-##### Functions ##############################################################################
+##### Functions ###############################################################################
 ###############################################################################################
 
-def Generate_CSV(file: str) -> (bool, str):
+def generate_csv(file: str) -> (bool, str):
     """
     Converts an HTML file of favorites into a CSV file.
     :param file: The HTML file of favorites to convert.
-    :return: A tuple containing a boolean indicating whether the conversion was successful and the name of the CSV file.
+    :return:    A tuple containing a boolean indicating whether the conversion was
+                successful and the name of the CSV file.
     """
-    global debug
-
     # check if the file exists and is accessible
+    debug(f"Checking if the file {file} exists and is accessible.")
     try:
         with open(file, "r", encoding="utf-8") as f:
             pass
@@ -133,11 +165,9 @@ def Generate_CSV(file: str) -> (bool, str):
     except PermissionError:
         print(f"You do not have permission to access the file {file}.")
         return False
-    except Exception as e:
-        print(f"An error occurred when accessing the file {file}: {e}")
-        return False
 
     # Check if the file is an HTML file
+    debug(f"Checking if the file {file} is an HTML file.")
     if not file.endswith(".html"):
         print("The file is not an HTML file.")
         return False
@@ -146,6 +176,7 @@ def Generate_CSV(file: str) -> (bool, str):
     file_name: str = file.split(".")[0]
 
     # Read the exported bookmarks HTML file
+    debug(f"Reading the file {file}.")
     with open(file, "r", encoding="utf-8") as f:
         html_data: str = f.read()
 
@@ -164,6 +195,7 @@ def Generate_CSV(file: str) -> (bool, str):
     favorites_data: list = []
 
     # Go through the links to extract the favorites and their folders
+    debug("Extracting the favorites and their folders.")
     for link in links:
 
         # Make sure the link is a favorite
@@ -181,13 +213,14 @@ def Generate_CSV(file: str) -> (bool, str):
             folders = [folder for folder in folders if folder != ""]
             path: str = " > ".join(folders[::-1])
 
-            favorite: Favorite_Link = Favorite_Link(
+            favorite: FavoriteLink = FavoriteLink(
                 title=link.text,
                 url=link.get("href"),
                 folder=path
             )
-            debug(favorite.__str__())
-            favorites_data.append(favorite.__dict__())
+            # noinspection PyTypeChecker
+            debug(favorite)
+            favorites_data.append(favorite.__dict__)
 
     # Create a pandas DataFrame from the favorites data
     df = pd.DataFrame(favorites_data)
@@ -203,7 +236,13 @@ def Generate_CSV(file: str) -> (bool, str):
 ###############################################################################################
 
 def main() -> bool:
-    global debug, program_name, program_version, program_description
+    """
+    Main function of the program.
+    """
+
+    program_name: str = "Converter html bookmarks to csv"
+    program_version: str = "1.0"
+    program_description: str = "Converts an HTML file containing bookmarks to a CSV file."
 
     # Create an argument parser
     parser = argparse.ArgumentParser(prog=program_name, description=program_description)
@@ -214,17 +253,16 @@ def main() -> bool:
 
     # Enable debug mode if the option is enabled
     if args.debug:
-        debug = Debug(True)
+        debug.enable()
         debug(f"Debug mode enabled: {debug}")
 
     # Convert the bookmarks HTML file into a CSV file
-    boolean, file = Generate_CSV(args.file)
+    boolean, file = generate_csv(args.file)
     if boolean:
         print(f"Conversion completed. The favorites have been saved in the file {file}.")
         return True
-    else:
-        print("An error occurred during the conversion of the favorites.")
-        return False
+    print("An error occurred during the conversion of the favorites.")
+    return False
 
 
 if __name__ == "__main__":
