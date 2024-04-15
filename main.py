@@ -50,19 +50,48 @@ class Debug:
         """
         return f"debug({self.boolean})"
 
+    def __bool__(self) -> bool:
+        """
+        Returns the boolean value of the instance of the Debug class.
+        :return: The boolean value of the instance of the Debug class.
+        """
+        return self.boolean
+
+    def change(self, boolean: bool) -> None:
+        """
+        Changes the boolean value of the instance of the Debug class.
+        :param boolean: The new boolean value.
+        :return: None
+        """
+        self.boolean = boolean
+
+    def enable(self) -> None:
+        """
+        Enables debug mode.
+        :return: None
+        """
+        self.change(True)
+
+    def disable(self) -> None:
+        """
+        Disables debug mode.
+        :return: None
+        """
+        self.change(False)
+
 
 class FavoriteLink:
     """
     Class representing a favorite (link) with a title, a URL and a folder.
 
     Attributes:
-        Title: str -> The title of the favorite.
-        URL: str -> The URL of the favorite.
-        Folder: str -> The folder of the favorite.
+        title: str -> The title of the favorite.
+        url: str -> The URL of the favorite.
+        folder: str -> The folder of the favorite.
     """
-    Title: str
-    URL: str
-    Folder: str
+    title: str
+    url: str
+    folder: str
 
     def __init__(self, title: str, url: str, folder: str = "") -> None:
         """
@@ -71,18 +100,18 @@ class FavoriteLink:
         :param url: URL of the favorite.
         :param folder: Folder of the favorite.
         """
-        self.Title = title
-        self.URL = url
-        self.Folder = folder
+        self.title = title
+        self.url = url
+        self.folder = folder
 
     def __str__(self) -> str:
         """
         Returns a string representing the instance of the Favorite_Link class.
         :return: A string representing the instance of the Favorite_Link class.
         """
-        return f"Title: {self.Title}\n" \
-               f"URL: {self.URL}\n" \
-               f"Folder: {self.Folder}"
+        return f"Title: {self.title}\n" \
+               f"URL: {self.url}\n" \
+               f"Folder: {self.folder}"
 
     def __dict__(self) -> dict:
         """
@@ -90,9 +119,9 @@ class FavoriteLink:
         :return: A dictionary representing the instance of the Favorite_Link class.
         """
         return {
-            "Title": self.Title,
-            "URL": self.URL,
-            "Folder": self.Folder
+            "Title": self.title,
+            "URL": self.url,
+            "Folder": self.folder
         }
 
     def __list__(self) -> list:
@@ -101,9 +130,9 @@ class FavoriteLink:
         :return: A list representing the instance of the Favorite_Link class.
         """
         return [
-            self.Title,
-            self.URL,
-            self.Folder
+            self.title,
+            self.url,
+            self.folder
         ]
 
 
@@ -135,9 +164,6 @@ def generate_csv(file: str) -> (bool, str):
         return False
     except PermissionError:
         print(f"You do not have permission to access the file {file}.")
-        return False
-    except Exception as e:
-        print(f"An error occurred when accessing the file {file}: {e}")
         return False
 
     # Check if the file is an HTML file
@@ -227,8 +253,7 @@ def main() -> bool:
 
     # Enable debug mode if the option is enabled
     if args.debug:
-        global debug
-        debug = Debug(True)
+        debug.enable()
         debug(f"Debug mode enabled: {debug}")
 
     # Convert the bookmarks HTML file into a CSV file
