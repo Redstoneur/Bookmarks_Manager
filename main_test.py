@@ -43,7 +43,7 @@ class TestFavoriteLink(unittest.TestCase):
         """
         Test for the __str__ method of the Favorite_Link class.
         """
-        link = main.Favorite_Link("Title", "URL", "Folder")
+        link = main.FavoriteLink("Title", "URL", "Folder")
         expected_str = "Title: Title\nURL: URL\nFolder: Folder"
         self.assertEqual(str(link), expected_str)
 
@@ -51,7 +51,7 @@ class TestFavoriteLink(unittest.TestCase):
         """
         Test for the __dict__ property of the Favorite_Link class.
         """
-        link = main.Favorite_Link("Title", "URL", "Folder")
+        link = main.FavoriteLink("Title", "URL", "Folder")
         expected_dict = {"Title": "Title", "URL": "URL", "Folder": "Folder"}
         self.assertEqual(link.__dict__, expected_dict)
 
@@ -59,7 +59,7 @@ class TestFavoriteLink(unittest.TestCase):
         """
         Test for the __list__ method of the Favorite_Link class.
         """
-        link = main.Favorite_Link("Title", "URL", "Folder")
+        link = main.FavoriteLink("Title", "URL", "Folder")
         expected_list = ["Title", "URL", "Folder"]
         self.assertEqual(link.__list__(), expected_list)
 

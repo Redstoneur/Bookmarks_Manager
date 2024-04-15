@@ -1,3 +1,7 @@
+"""
+This module contains the main code of the program.
+"""
+
 ###############################################################################################
 ##### Import ##################################################################################
 ###############################################################################################
@@ -47,7 +51,7 @@ class Debug:
         return f"debug({self.boolean})"
 
 
-class Favorite_Link:
+class FavoriteLink:
     """
     Class representing a favorite (link) with a title, a URL and a folder.
 
@@ -102,28 +106,27 @@ class Favorite_Link:
             self.Folder
         ]
 
+
 ###############################################################################################
 ##### Global Variables ########################################################################
 ###############################################################################################
 
 debug: Debug = Debug(False)
-program_name: str = "Converter html bookmarks to csv"
-program_version: str = "1.0"
-program_description: str = "Converts an HTML file containing bookmarks to a CSV file."
+
 
 ###############################################################################################
-##### Functions ##############################################################################
+##### Functions ###############################################################################
 ###############################################################################################
 
-def Generate_CSV(file: str) -> (bool, str):
+def generate_csv(file: str) -> (bool, str):
     """
     Converts an HTML file of favorites into a CSV file.
     :param file: The HTML file of favorites to convert.
-    :return: A tuple containing a boolean indicating whether the conversion was successful and the name of the CSV file.
+    :return:    A tuple containing a boolean indicating whether the conversion was
+                successful and the name of the CSV file.
     """
-    global debug
-
     # check if the file exists and is accessible
+    debug(f"Checking if the file {file} exists and is accessible.")
     try:
         with open(file, "r", encoding="utf-8") as f:
             pass
@@ -138,6 +141,7 @@ def Generate_CSV(file: str) -> (bool, str):
         return False
 
     # Check if the file is an HTML file
+    debug(f"Checking if the file {file} is an HTML file.")
     if not file.endswith(".html"):
         print("The file is not an HTML file.")
         return False
@@ -146,6 +150,7 @@ def Generate_CSV(file: str) -> (bool, str):
     file_name: str = file.split(".")[0]
 
     # Read the exported bookmarks HTML file
+    debug(f"Reading the file {file}.")
     with open(file, "r", encoding="utf-8") as f:
         html_data: str = f.read()
 
@@ -164,6 +169,7 @@ def Generate_CSV(file: str) -> (bool, str):
     favorites_data: list = []
 
     # Go through the links to extract the favorites and their folders
+    debug("Extracting the favorites and their folders.")
     for link in links:
 
         # Make sure the link is a favorite
@@ -181,13 +187,14 @@ def Generate_CSV(file: str) -> (bool, str):
             folders = [folder for folder in folders if folder != ""]
             path: str = " > ".join(folders[::-1])
 
-            favorite: Favorite_Link = Favorite_Link(
+            favorite: FavoriteLink = FavoriteLink(
                 title=link.text,
                 url=link.get("href"),
                 folder=path
             )
-            debug(favorite.__str__())
-            favorites_data.append(favorite.__dict__())
+            # noinspection PyTypeChecker
+            debug(favorite)
+            favorites_data.append(favorite.__dict__)
 
     # Create a pandas DataFrame from the favorites data
     df = pd.DataFrame(favorites_data)
@@ -203,7 +210,13 @@ def Generate_CSV(file: str) -> (bool, str):
 ###############################################################################################
 
 def main() -> bool:
-    global debug, program_name, program_version, program_description
+    """
+    Main function of the program.
+    """
+
+    program_name: str = "Converter html bookmarks to csv"
+    program_version: str = "1.0"
+    program_description: str = "Converts an HTML file containing bookmarks to a CSV file."
 
     # Create an argument parser
     parser = argparse.ArgumentParser(prog=program_name, description=program_description)
@@ -214,17 +227,17 @@ def main() -> bool:
 
     # Enable debug mode if the option is enabled
     if args.debug:
+        global debug
         debug = Debug(True)
         debug(f"Debug mode enabled: {debug}")
 
     # Convert the bookmarks HTML file into a CSV file
-    boolean, file = Generate_CSV(args.file)
+    boolean, file = generate_csv(args.file)
     if boolean:
         print(f"Conversion completed. The favorites have been saved in the file {file}.")
         return True
-    else:
-        print("An error occurred during the conversion of the favorites.")
-        return False
+    print("An error occurred during the conversion of the favorites.")
+    return False
 
 
 if __name__ == "__main__":
