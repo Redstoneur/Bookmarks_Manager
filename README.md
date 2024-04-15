@@ -1,11 +1,30 @@
 # Bookmarks Manager
 
+---
+
 ![License](https://img.shields.io/github/license/Redstoneur/Bookmarks_Manager)
 ![Top Language](https://img.shields.io/github/languages/top/Redstoneur/Bookmarks_Manager)
-![Build Status](https://img.shields.io/github/actions/workflow/status/Redstoneur/Bookmarks_Manager/build-and-publish.yml)
+![Python Version](https://img.shields.io/badge/python-3.8-blue)
+![Size](https://img.shields.io/github/repo-size/Redstoneur/Bookmarks_Manager)
+![Contributors](https://img.shields.io/github/contributors/Redstoneur/Bookmarks_Manager)
+![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/Bookmarks_Manager)
+![Issues](https://img.shields.io/github/issues/Redstoneur/Bookmarks_Manager)
+![Pull Requests](https://img.shields.io/github/issues-pr/Redstoneur/Bookmarks_Manager)
+
+---
+
+![Forks](https://img.shields.io/github/forks/Redstoneur/Bookmarks_Manager)
+![Stars](https://img.shields.io/github/stars/Redstoneur/Bookmarks_Manager)
+![Watchers](https://img.shields.io/github/watchers/Redstoneur/Bookmarks_Manager)
+
+---
+
 ![Latest Release](https://img.shields.io/github/v/release/Redstoneur/Bookmarks_Manager)
 ![Release Date](https://img.shields.io/github/release-date/Redstoneur/Bookmarks_Manager)
-![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/Bookmarks_Manager)
+
+---
+
+## Description
 
 Bookmarks Manager is a Python program that converts an HTML file containing bookmarks into a CSV file. It was designed to facilitate the management and organization of bookmarks.
 
